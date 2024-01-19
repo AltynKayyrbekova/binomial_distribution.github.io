@@ -35,6 +35,16 @@
 
                 <label for="x">Количество успехов (\( x \)):</label>
                 <input type="number" id="x" name="x" required min="0">
+
+                <label for="condition">Условие:</label>
+                <select id="condition" name="condition">
+                    <option value="equal">Равно</option>
+                    <option value="less">Меньше</option>
+                    <option value="greater">Больше</option>
+                    <option value="lessEqual">Меньше или равно</option>
+                    <option value="greaterEqual">Больше или равно</option>
+                </select>
+
                 <p></p>
                 <button type="button" onclick="generateBinomial()">Сгенерировать</button>
             </form>
@@ -112,12 +122,14 @@
             const nInput = document.getElementById('n');
             const pInput = document.getElementById('p');
             const xInput = document.getElementById('x');
+            const conditionSelect = document.getElementById('condition');
             const outputContainer = document.getElementById('output');
             const distributionTableSection = document.getElementById('distribution-table-section');
 
             const n = parseInt(nInput.value);
             const p = parseFloat(pInput.value);
             const x = parseInt(xInput.value);
+            const condition = conditionSelect.value;
 
             // Validation check
             if (
@@ -129,13 +141,31 @@
             }
 
             const data = calculateBinomialDistribution(n, p);
-            updateChart(data, n);
-            updateOutput(n, p, x);
-            updateDistributionTable(data);
+            const filteredData = filterData(data, x, condition);
+            
+            updateChart(filteredData, n);
+            updateOutput(n, p, x, filteredData);
+            updateDistributionTable(filteredData);
 
             // Show the output section and distribution table section
             outputContainer.style.display = 'block';
             distributionTableSection.style.display = 'block';
+        }
+
+        function filterData(data, x, condition) {
+            if (condition === 'equal') {
+                return data.filter(entry => entry.x === x);
+            } else if (condition === 'less') {
+                return data.filter(entry => entry.x < x);
+            } else if (condition === 'greater') {
+                return data.filter(entry => entry.x > x);
+            } else if (condition === 'lessEqual') {
+                return data.filter(entry => entry.x <= x);
+            } else if (condition === 'greaterEqual') {
+                return data.filter(entry => entry.x >= x);
+            }
+
+            return data;
         }
 
         function calculateBinomialDistribution(n, p) {
@@ -214,19 +244,24 @@
             });
         }
 
-        function updateOutput(n, p, x) {
+        function updateOutput(n, p, x, data) {
             const outputContainer = document.getElementById('output');
             const probabilityElement = outputContainer.querySelector('#output-probability span.math');
             const meanElement = outputContainer.querySelector('#output-mean span.math');
             const varianceElement = outputContainer.querySelector('#output-variance span.math');
 
-            const probability = binomialProbability(x, n, p).toFixed(4);
+            const probability = calculateProbability(x, data).toFixed(4);
             const mean = (n * p).toFixed(2);
             const variance = (n * p * (1 - p)).toFixed(2);
 
             probabilityElement.textContent = probability;
             meanElement.textContent = mean;
             varianceElement.textContent = variance;
+        }
+
+        function calculateProbability(x, data) {
+            const entry = data.find(entry => entry.x === x);
+            return entry ? entry.y : 0;
         }
 
         function binomialProbability(x, n, p) {
