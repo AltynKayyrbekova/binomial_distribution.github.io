@@ -1,0 +1,99 @@
+body {
+    font-size: 100%;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    background-image: url('../backgrounds/cream.png');
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #000000;
+    color: #ecf0f1;
+    padding: 1vw 0; /* Уменьшил размер шрифта для заголовка */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    font-size: 2vw; /* Увеличил размер шрифта для текста заголовка */
+}
+
+
+.container {
+    width: 70%;
+    margin-left: 20%;
+    display: flex;
+    justify-content:center;
+    margin-top: 20px;
+}
+
+#simulation-section {
+    flex: 1;
+}
+
+#distribution-table-section {
+    margin-top: 20px;
+    flex: 1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+#output {
+    display: none;
+    margin-top: 20px;
+}
+
+div[role="button"] {
+    text-transform: none;
+    cursor: pointer;
+    padding: 2px;
+    background-color: #ffffff;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    width: 25%;
+    margin-bottom: 20px;
+}
+
+#example-text {
+    margin-top: 10px;
+    display: none;
+    margin-bottom: 20px;
+}
+
+input, select {
+    border: 1px solid #63f34c;
+    border-radius: 10px;
+    padding: 6px;
+    background-color: rgb(240, 240, 240);
+    margin: 2px 0 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    border-radius: 40px;
+    border: solid 6px rgb(84, 182, 84);
+    color: rgb(255, 255, 255);
+    background-color: rgb(84, 182, 84);
+    width: 40%;
+    box-sizing: border-box;
+}
+
+.distribution-table-container {
+    margin-right: 100px;
+    float: right;
+    width: 40%;
+}
